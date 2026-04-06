@@ -171,13 +171,13 @@
         </div>
         
         <!-- Live Floating Preview -->
-        <div class="absolute bottom-6 left-6 w-64 h-48 glass-card rounded-xl shadow-2xl overflow-hidden flex flex-col group transition-all duration-300 hover:w-80 hover:h-60 z-20">
+        <div class="absolute bottom-6 left-6 w-64 h-48 glass-card rounded-xl shadow-2xl overflow-hidden flex flex-col group transition-all duration-300 hover:w-80 hover:h-60 z-20" id="floating-preview">
           <div class="px-3 py-2 flex items-center justify-between border-b border-white/5 bg-white/5">
             <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div><span class="text-[10px] font-bold text-white/60 uppercase">Live Preview</span></div>
-            <button class="p-1 hover:bg-white/10 rounded"><span class="material-symbols-outlined text-[14px] text-white/40">open_in_new</span></button>
+            <button class="p-1 hover:bg-white/10 rounded" onclick="switchToTab(2)"><span class="material-symbols-outlined text-[14px] text-white/40">open_in_new</span></button>
           </div>
-          <div class="flex-1 bg-white flex items-center justify-center p-4">
-            <h1 class="text-bg font-bold text-center text-sm" dir="ltr">Hello, World</h1>
+          <div class="flex-1 bg-white overflow-hidden">
+            <iframe id="floating-preview-iframe" class="w-full h-full border-none pointer-events-none scale-75 origin-top"></iframe>
           </div>
         </div>
       </div>
@@ -269,6 +269,23 @@
   </footer>
 
   <!-- Modals & Overlays -->
+  <div class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-6" id="preview-modal">
+    <div class="bg-surface/90 border border-white/10 rounded-[24px] w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl">
+      <div class="p-6 border-b border-white/5 flex items-center justify-between bg-surface/50">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-primary">visibility</span>
+          <h2 class="text-xl font-bold text-white">معاينة المشروع</h2>
+        </div>
+        <button class="p-2 hover:bg-white/10 rounded-full text-white/60 transition-all" onclick="closeModals()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="flex-1 bg-white overflow-hidden rounded-b-[24px]">
+        <iframe id="modal-preview-iframe" class="w-full h-full border-none"></iframe>
+      </div>
+    </div>
+  </div>
+
   <div class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-6" id="templates-modal">
     <div class="bg-surface/90 border border-white/10 rounded-[24px] w-full max-w-4xl max-h-[80vh] flex flex-col shadow-2xl">
       <div class="p-8 border-b border-white/5 flex items-center justify-between">
