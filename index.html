@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZGE | Zero-Gravity Editor</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- ✅ Material Web Components (md-) - Real Google Behaviors: Ripple, Focus, Motion -->
+  <script type="module" src="https://esm.run/@material/web/all.js"></script>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": { DEFAULT: "#8AB4F8", light: "#1A73E8" },
+            "surface": { DEFAULT: "#1A1C2E", light: "#FFFFFF" },
+            "bg": { DEFAULT: "#0F111A", light: "#F8F9FA" }
+          },
+          borderRadius: { "outer": "16px", "button": "8px" },
+          fontFamily: {
+            "ui": ["'Noto Sans Arabic'", "'Readex Pro'", "sans-serif"],
+            "code": ["'Fira Code'", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+
+  <!-- ZGE Core Styles (Tailwind overrides, MWC theming, and glassmorphism) -->
+  <link rel="stylesheet" href="./assets/css/zge-core.css">
+</head>
+
+<body class="h-screen overflow-hidden flex flex-col font-ui">
+
+  <header class="glass-effect topbar-height w-full top-0 sticky flex items-center px-6 z-50 relative">
+    <div class="flex items-center gap-3 justify-start z-10">
+      <div class="text-xl font-bold tracking-tight text-primary flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-2xl">rocket_launch</span>
+        <div class="flex items-center gap-2">
+          <span>Zero-Gravity</span>
+          <span class="text-white/20">|</span>
+          <span class="text-white/80 font-code text-sm">ZGE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation (المركز المطلق في الهيدر) -->
+    <nav class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-8 w-max z-0">
+      <button class="nav-link active text-sm font-medium hover:text-primary flex items-center gap-2 transition-all" onclick="switchToTab(1)">
+        <span class="material-symbols-outlined text-[18px]">terminal</span>
+        محرر الأكواد
+      </button>
+      <button class="nav-link text-white/60 text-sm font-medium hover:text-primary flex items-center gap-2 transition-all" onclick="switchToTab(2)">
+        <span class="material-symbols-outlined text-[18px]">visibility</span>
+        المعاينة
+      </button>
+      <button class="nav-link text-white/60 text-sm font-medium hover:text-primary relative flex items-center gap-2 transition-all" onclick="switchToTab(3)">
+        <span class="material-symbols-outlined text-[18px]">grid_view</span>
+        القوالب
+      </button>
+      <button class="nav-link text-white/60 text-sm font-medium hover:text-primary flex items-center gap-2 transition-all" onclick="switchToTab(4)">
+        <span class="material-symbols-outlined text-[18px]">folder_shared</span>
+        مشاريع
+      </button>
+    </nav>
+
+    <div class="flex items-center gap-3 justify-end z-10 mr-auto">
+      <md-filled-button id="btn-run" class="shadow-lg shadow-primary/20">
+        <md-icon slot="icon">play_arrow</md-icon>
+        Run
+      </md-filled-button>
+      
+      <md-outlined-button id="btn-share" onclick="showSnackbar()">
+        <md-icon slot="icon">share</md-icon>
+        Share
+      </md-outlined-button>
+      
+      <md-icon-button id="btn-settings" aria-label="Settings">
+        <md-icon>settings</md-icon>
+      </md-icon-button>
+      
+      <div class="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center overflow-hidden border border-white/10 cursor-pointer hover:border-primary/50 transition-colors">
+        <img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4GX4GQj46K3X4e3LoCkL2THxy3UOT_gsWaORkL4uUHTpR92cre_j7-sp82n6th1OCK2uDaJeWQgQFb7RuYKw7CB4oAelo4ufXah_kCC4xFGIz-IqP5fHJC_pxIS_nqLOrRQLt0DyE_l4FrxGU9U48K14D9cMyx4SHqaPXQP1IkdimVQgz3_cSlQI13QR8UuEXluP_fK1C-qubf6kRbnFTEX-lcE5TrZDhyNzxZ41zTp3xE78Xao2I2AwiXd4D-Yx3eqChBSO3ZiIu"/>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex overflow-hidden">
+  
+       <!-- 4: Activity Bar (Far Left in RTL) -->
+    <nav class="w-[56px] h-full bg-surface/60 border-r border-white/5 flex flex-col items-center py-4 gap-4 shrink-0 z-[60]">
+      <div class="relative group/tool">
+        <md-icon-button class="text-white/40 hover:text-primary transition-all"><md-icon>folder_open</md-icon></md-icon-button>
+        <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">ملفات المشروع</div>
+      </div>
+      <div class="relative group/tool">
+        <md-icon-button class="text-white/40 hover:text-primary transition-all"><md-icon>search</md-icon></md-icon-button>
+        <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">البحث الذكي</div>
+      </div>
+      <div class="relative group/tool">
+        <md-icon-button class="text-white/40 hover:text-primary transition-all"><md-icon>extension</md-icon></md-icon-button>
+        <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">الإضافات</div>
+      </div>
+      <div class="flex-1"></div>
+      <div class="relative group/tool">
+        <md-icon-button class="text-white/40 hover:text-primary transition-all"><md-icon>settings</md-icon></md-icon-button>
+        <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">إعدادات البيئة</div>
+      </div>
+    </nav>
+      <!-- 3: Project Explorer (Left in RTL) -->
+    <aside class="sidebar-width bg-surface h-full flex flex-col py-6 items-end rtl shrink-0 border-r border-white/5">
+      <div class="px-6 mb-8 w-full text-right">
+        <h2 class="text-white font-bold text-sm">مستكشف الملفات المحلي</h2>
+        <p class="text-white/40 text-[10px] mt-1 font-code uppercase">ZGE_CORE / LOCAL</p>
+      </div>
+      <nav class="flex-1 w-full overflow-y-auto custom-scrollbar px-4 space-y-2">
+        <div class="flex items-center justify-between p-2.5 rounded-[8px] hover:bg-white/5 text-white/50 cursor-pointer transition-all">
+          <span class="material-symbols-outlined text-sm">chevron_left</span>
+          <div class="flex items-center gap-3"><span class="text-xs font-medium">img/</span><span class="material-symbols-outlined text-primary/70">folder</span></div>
+        </div>
+        <div class="flex items-center justify-between p-2.5 rounded-[8px] bg-primary/10 text-primary shadow-sm cursor-pointer transition-all">
+          <span class="material-symbols-outlined text-sm">expand_more</span>
+          <div class="flex items-center gap-3"><span class="text-xs font-bold">vids/</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder</span></div>
+        </div>
+      </nav>
+      <div class="px-4 mt-auto w-full pt-4">
+        <md-filled-tonal-button id="btn-open-project" style="width:100%;">
+          <md-icon slot="icon">create_new_folder</md-icon>
+          + فتح مشروع
+        </md-filled-tonal-button>
+      </div>
+    </aside>
+
+  
+
+
+
+    <!-- 2: Code Editor Space -->
+    <section class="flex-1 flex flex-col bg-bg p-6 overflow-hidden relative">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2 bg-surface/50 p-1.5 rounded-[10px] border border-white/5">
+          <div class="px-4 py-2 rounded-[8px] bg-surface text-primary text-xs font-code flex items-center gap-3 shadow-sm cursor-pointer">
+            <span>index.html</span>
+            <span class="material-symbols-outlined text-[14px] opacity-60">close</span>
+          </div>
+          <div class="px-4 py-2 rounded-[8px] text-white/40 text-xs font-code flex items-center gap-2 hover:bg-white/5 cursor-pointer">
+            <span>styles.css</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 bg-surface rounded-[16px] p-8 font-code text-[15px] leading-relaxed overflow-hidden relative shadow-2xl border border-white/5">
+        <div class="absolute right-0 top-0 bottom-0 w-14 bg-bg/30 flex flex-col items-center pt-8 text-white/20 text-xs select-none border-l border-white/5">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        </div>
+        <div class="pr-16 h-full overflow-y-auto custom-scrollbar text-left" dir="ltr">
+          <div class="text-white/20 italic mb-6 text-sm">
+            &lt;!-- Code Space Placeholder --&gt;
+          </div>
+          <div class="space-y-1.5">
+            <p><span class="text-primary/60">&lt;!DOCTYPE</span> <span class="text-primary">html</span><span class="text-primary/60">&gt;</span></p>
+            <p><span class="text-primary/60">&lt;h1&gt;</span>Hello, Weightless World<span class="text-primary/60">&lt;/h1&gt;</span></p>
+            <div class="inline-block w-0.5 h-5 bg-primary animate-pulse align-middle"></div>
+          </div>
+        </div>
+        
+        <!-- Live Floating Preview -->
+        <div class="absolute bottom-6 left-6 w-64 h-48 glass-card rounded-xl shadow-2xl overflow-hidden flex flex-col group transition-all duration-300 hover:w-80 hover:h-60 z-20">
+          <div class="px-3 py-2 flex items-center justify-between border-b border-white/5 bg-white/5">
+            <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div><span class="text-[10px] font-bold text-white/60 uppercase">Live Preview</span></div>
+            <button class="p-1 hover:bg-white/10 rounded"><span class="material-symbols-outlined text-[14px] text-white/40">open_in_new</span></button>
+          </div>
+          <div class="flex-1 bg-white flex items-center justify-center p-4">
+            <h1 class="text-bg font-bold text-center text-sm" dir="ltr">Hello, World</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+	
+	
+	    <!-- 1: Assistant Sidebar (Right in RTL) -->
+    <aside class="chat-width bg-surface/40 h-full flex flex-col border-l border-white/5 shrink-0">
+      <div class="h-[64px] flex items-center justify-between px-6 border-b border-white/5 bg-surface/50">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-primary text-xl animate-pulse-soft" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+          <h2 class="text-sm font-bold text-white/90">Vibe Assistant</h2>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-6">
+        <div class="flex flex-col gap-2 items-start max-w-[90%]">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+            </div>
+            <span class="text-[10px] font-bold text-primary/80 uppercase tracking-tighter">Gemini</span>
+          </div>
+          <div class="p-4 rounded-2xl rounded-tr-none bg-white/5 backdrop-blur-md border border-white/10 text-[13px] leading-relaxed text-white/80 shadow-sm">
+            أهلاً بك! أنا مساعد Vibe Coding الخاص بك. كيف يمكنني مساعدتك اليوم؟
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-surface/60 border-t border-white/5 relative z-20 flex flex-col gap-3">
+        <div class="w-full flex items-center gap-1 group/chips">
+          <button class="shrink-0 text-white/40 hover:text-primary opacity-50 hover:opacity-100 transition-all focus:outline-none flex items-center justify-center cursor-pointer hover:scale-110" onmouseover="startScrollChips(2)" onmouseout="stopScrollChips()">
+            <span class="material-symbols-outlined text-[20px]">keyboard_arrow_right</span>
+          </button>
+          <div id="chips-container" class="flex-1 overflow-x-auto flex items-center gap-1.5 pb-1 [&::-webkit-scrollbar]:hidden" style="scrollbar-width: none;">
+            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[11px] text-primary/80">palette</span>
+              تغيير ألوان الهيدر
+            </button>
+            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[11px] text-primary/80">login</span>
+              أضف زر تسجيل دخول
+            </button>
+            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[11px] text-primary/80">devices</span>
+              الاستجابة المتجاوبة
+            </button>
+            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[11px] text-primary/80">psychology</span>
+              شرح الكود الحالي
+            </button>
+          </div>
+          <button class="shrink-0 text-white/40 hover:text-primary opacity-50 hover:opacity-100 transition-all focus:outline-none flex items-center justify-center cursor-pointer hover:scale-110" onmouseover="startScrollChips(-2)" onmouseout="stopScrollChips()">
+            <span class="material-symbols-outlined text-[20px]">keyboard_arrow_left</span>
+          </button>
+        </div>
+
+        <div class="bg-bg/50 border border-white/10 rounded-[12px] flex flex-col focus-within:ring-1 focus-within:ring-primary/50 focus-within:border-primary/50 transition-all shadow-inner">
+          <textarea class="w-full bg-transparent border-none py-3 px-4 text-xs text-white placeholder:text-white/20 focus:ring-0 resize-none min-h-[60px]" placeholder="اسأل عن أي شيء..."></textarea>
+          <div class="flex items-center justify-between px-2 pb-2">
+            <div class="flex items-center gap-1">
+              <md-icon-button aria-label="صوت" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon class="animate-mic-pulse text-primary">mic</md-icon></md-icon-button>
+              <md-icon-button aria-label="ملف" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>attach_file</md-icon></md-icon-button>
+              <md-icon-button aria-label="صورة" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>image</md-icon></md-icon-button>
+              <md-icon-button aria-label="كود" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>code</md-icon></md-icon-button>
+            </div>
+            <button class="w-8 h-8 rounded-[8px] bg-primary text-bg flex items-center justify-center shadow-lg relative overflow-hidden group cursor-pointer">
+              <md-ripple></md-ripple>
+              <span class="material-symbols-outlined text-[16px] transform -scale-x-100" style="font-variation-settings: 'FILL' 1;">send</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+
+  </main>
+
+  <footer class="bg-bg/90 statusbar-height flex flex-row-reverse items-center justify-start px-6 gap-8 z-50 text-[11px] font-medium border-t border-white/5">
+    <div class="flex items-center gap-2 text-primary cursor-pointer"><span class="material-symbols-outlined text-[16px]">account_tree</span><span class="font-bold">main</span></div>
+    <div class="flex items-center gap-2 text-white/30 cursor-pointer"><span class="material-symbols-outlined text-[16px]">language</span><span>UTF-8</span></div>
+    <div class="mr-auto flex items-center gap-4 border-r border-white/5 pr-6 h-full">
+      <div class="flex items-center gap-3 px-3 py-0.5 rounded-full bg-white/5 border border-white/5 hover:bg-white/10 cursor-pointer">
+        <span class="material-symbols-outlined text-[14px] text-primary/80">play_arrow</span>
+        <span class="text-white/40 text-[10px]">Lo-fi Focus 🎧</span>
+      </div>
+      <div class="flex items-center gap-3"><span class="text-primary/80">Gemini Connected</span><div class="w-2 h-2 bg-green-400 rounded-full"></div></div>
+    </div>
+  </footer>
+
+  <!-- Modals & Overlays -->
+  <div class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-6" id="templates-modal">
+    <div class="bg-surface/90 border border-white/10 rounded-[24px] w-full max-w-4xl max-h-[80vh] flex flex-col shadow-2xl">
+      <div class="p-8 border-b border-white/5 flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-white">قوالب ZGE الجاهزة</h2>
+        <button class="p-2 hover:bg-white/5 rounded-full text-white/40" onclick="closeModals()"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="p-8 grid grid-cols-3 gap-6 overflow-y-auto">
+        <div class="glass-card p-6 rounded-2xl text-center"><h3 class="font-bold text-white">صفحة هبوط</h3></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-6" id="community-modal">
+    <div class="bg-surface/90 border border-white/10 rounded-[24px] w-full max-w-4xl max-h-[80vh] flex flex-col shadow-2xl">
+      <div class="p-8 border-b border-white/5 flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-white">مشاريع المجتمع</h2>
+        <button class="p-2 hover:bg-white/5 rounded-full text-white/40" onclick="closeModals()"><span class="material-symbols-outlined">close</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications Layer -->
+  <md-snackbar id="global-snackbar"></md-snackbar>
+  <div class="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] pointer-events-none" id="snackbar-container"></div>
+
+  <!-- Core Scripts -->
+  <script src="./logic/ui-controller.js"></script>
+  <script src="./logic/main-flow.js"></script>
+</body>
+</html>
