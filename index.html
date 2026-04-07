@@ -10,6 +10,7 @@
 
   <!-- ✅ Material Web Components (md-) - Real Google Behaviors: Ripple, Focus, Motion -->
   <script type="module" src="https://esm.run/@material/web/all.js"></script>
+  <script src="assets/lucide.min.js"></script>
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script id="tailwind-config">
@@ -94,7 +95,7 @@
   <main class="flex-1 flex overflow-hidden">
   
        <!-- 4: Activity Bar (Far Left in RTL) -->
-    <nav class="w-[56px] h-full bg-surface/60 border-r border-white/5 flex flex-col items-center py-4 gap-4 shrink-0 z-[60]">
+    <nav class="w-[56px] h-full bg-surface/60 border-r border-white/5 flex flex-col items-center py-4 gap-4 shrink-0 z-[60] relative">
       <div class="relative group/tool">
         <md-icon-button class="text-white/40 hover:text-primary transition-all"><md-icon>folder_open</md-icon></md-icon-button>
         <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">ملفات المشروع</div>
@@ -104,13 +105,65 @@
         <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">البحث الذكي</div>
       </div>
       <div class="relative group/tool">
-        <md-icon-button class="text-white/40 hover:text-primary transition-all"><md-icon>extension</md-icon></md-icon-button>
-        <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">الإضافات</div>
+        <md-icon-button class="text-white/40 hover:text-primary transition-all" onclick="toggleComponentPanel()"><md-icon>widgets</md-icon></md-icon-button>
+        <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">البطاقات الجاهزة</div>
       </div>
       <div class="flex-1"></div>
       <div class="relative group/tool">
         <md-icon-button class="text-white/40 hover:text-primary transition-all"><md-icon>settings</md-icon></md-icon-button>
         <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all duration-300 pointer-events-none bg-surface/90 backdrop-blur-md border border-white/10 text-white/90 text-[10px] px-2.5 py-1.5 rounded-[8px] shadow-2xl whitespace-nowrap z-50 font-bold">إعدادات البيئة</div>
+      </div>
+
+      <!-- Component Panel -->
+      <div id="component-panel" class="absolute left-[56px] top-0 h-full w-64 bg-surface/95 backdrop-blur-xl border-r border-white/5 transform -translate-x-4 opacity-0 pointer-events-none transition-all duration-300 z-[50] flex flex-col shadow-2xl">
+         <div class="p-4 border-b border-white/5 flex items-center justify-between bg-white/5">
+            <h3 class="font-bold text-white/90 text-xs">Cyber Components</h3>
+            <button class="text-white/40 hover:text-primary transition-colors flex items-center justify-center p-1 rounded hover:bg-white/5" onclick="toggleComponentPanel()"><span class="material-symbols-outlined text-sm">close</span></button>
+         </div>
+         <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+            <!-- Card 1 -->
+            <div class="relative group/comp cursor-grab active:cursor-grabbing" onclick="addComponent(this)">
+               <div class="absolute inset-0 bg-primary/20 blur-md rounded-xl opacity-0 group-hover/comp:opacity-100 transition-opacity"></div>
+               <div class="relative bg-white/5 border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-sm hover:border-primary/50 transition-all overflow-hidden z-10 glass-card">
+                  <div class="flex items-center gap-3">
+                     <div class="w-8 h-8 rounded-lg bg-surface flex items-center justify-center border border-white/5"><span class="material-symbols-outlined text-primary text-sm">menu</span></div>
+                     <div>
+                        <div class="text-xs font-bold text-white/90">Cyber Navbar</div>
+                        <div class="text-[9px] text-white/40">Header & Navigation</div>
+                     </div>
+                  </div>
+                  <button class="w-6 h-6 rounded-md bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-bg transition-colors"><span class="material-symbols-outlined text-[14px]">add</span></button>
+               </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="relative group/comp cursor-grab active:cursor-grabbing" onclick="addComponent(this)">
+               <div class="absolute inset-0 bg-amber-400/20 blur-md rounded-xl opacity-0 group-hover/comp:opacity-100 transition-opacity"></div>
+               <div class="relative bg-white/5 border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-sm hover:border-amber-400/50 transition-all overflow-hidden z-10 glass-card">
+                  <div class="flex items-center gap-3">
+                     <div class="w-8 h-8 rounded-lg bg-surface flex items-center justify-center border border-white/5"><span class="material-symbols-outlined text-amber-400 text-sm">login</span></div>
+                     <div>
+                        <div class="text-xs font-bold text-white/90">Neon Login</div>
+                        <div class="text-[9px] text-white/40">Auth Interface</div>
+                     </div>
+                  </div>
+                  <button class="w-6 h-6 rounded-md bg-amber-400/10 text-amber-400 flex items-center justify-center hover:bg-amber-400 hover:text-bg transition-colors"><span class="material-symbols-outlined text-[14px]">add</span></button>
+               </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="relative group/comp cursor-grab active:cursor-grabbing" onclick="addComponent(this)">
+               <div class="absolute inset-0 bg-emerald-400/20 blur-md rounded-xl opacity-0 group-hover/comp:opacity-100 transition-opacity"></div>
+               <div class="relative bg-white/5 border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-sm hover:border-emerald-400/50 transition-all overflow-hidden z-10 glass-card">
+                  <div class="flex items-center gap-3">
+                     <div class="w-8 h-8 rounded-lg bg-surface flex items-center justify-center border border-white/5"><span class="material-symbols-outlined text-emerald-400 text-sm">vertical_align_bottom</span></div>
+                     <div>
+                        <div class="text-xs font-bold text-white/90">Glass Footer</div>
+                        <div class="text-[9px] text-white/40">Bottom Links</div>
+                     </div>
+                  </div>
+                  <button class="w-6 h-6 rounded-md bg-emerald-400/10 text-emerald-400 flex items-center justify-center hover:bg-emerald-400 hover:text-bg transition-colors"><span class="material-symbols-outlined text-[14px]">add</span></button>
+               </div>
+            </div>
+         </div>
       </div>
     </nav>
       <!-- 3: Project Explorer (Left in RTL) -->
@@ -153,31 +206,71 @@
             <span>styles.css</span>
           </div>
         </div>
+        
+        <!-- Editor Mode Tabs -->
+        <div class="flex items-center bg-surface/80 p-1 rounded-full border border-white/10 shadow-lg backdrop-blur-sm">
+          <button id="btn-mode-code" class="px-5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white/10 text-primary shadow-sm" onclick="switchEditorMode('code')">Code</button>
+          <button id="btn-mode-flow" class="px-5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all text-white/40 hover:text-white/80" onclick="switchEditorMode('flow')">Flow</button>
+        </div>
       </div>
 
-      <div class="flex-1 bg-surface rounded-[16px] p-8 font-code text-[15px] leading-relaxed overflow-hidden relative shadow-2xl border border-white/5">
-        <div class="absolute right-0 top-0 bottom-0 w-14 bg-bg/30 flex flex-col items-center pt-8 text-white/20 text-xs select-none border-l border-white/5">
-          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-        </div>
-        <div class="pr-16 h-full overflow-y-auto custom-scrollbar text-left" dir="ltr">
-          <div class="text-white/20 italic mb-6 text-sm">
-            &lt;!-- Code Space Placeholder --&gt;
+      <div id="editor-container" class="flex-1 bg-surface rounded-[16px] font-code text-[15px] leading-relaxed overflow-hidden relative shadow-2xl border border-white/5 transition-all duration-500">
+        <!-- Code Mode -->
+        <div id="code-mode-view" class="absolute inset-0 p-8 h-full w-full opacity-100 transition-opacity duration-300">
+          <div class="absolute right-0 top-0 bottom-0 w-14 bg-bg/30 flex flex-col items-center pt-8 text-white/20 text-xs select-none border-l border-white/5 z-20 space-y-[4px]">
+            <div class="group/line w-full flex justify-center cursor-pointer relative py-1" onclick="toggleHumanAnchor(this, 1)"><span class="group-hover/line:opacity-0 transition-opacity">1</span><span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] opacity-0 group-hover/line:opacity-100 text-white/40 anchor-icon transition-all">lock_open</span></div>
+            <div class="group/line w-full flex justify-center cursor-pointer relative py-1" onclick="toggleHumanAnchor(this, 2)"><span class="group-hover/line:opacity-0 transition-opacity">2</span><span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] opacity-0 group-hover/line:opacity-100 text-white/40 anchor-icon transition-all">lock_open</span></div>
+            <div class="group/line w-full flex justify-center cursor-pointer relative py-1" onclick="toggleHumanAnchor(this, 3)"><span class="group-hover/line:opacity-0 transition-opacity">3</span><span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] opacity-0 group-hover/line:opacity-100 text-white/40 anchor-icon transition-all">lock_open</span></div>
+            <div class="group/line w-full flex justify-center cursor-pointer relative py-1" onclick="toggleHumanAnchor(this, 4)"><span class="group-hover/line:opacity-0 transition-opacity">4</span><span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] opacity-0 group-hover/line:opacity-100 text-white/40 anchor-icon transition-all">lock_open</span></div>
+            <div class="group/line w-full flex justify-center cursor-pointer relative py-1" onclick="toggleHumanAnchor(this, 5)"><span class="group-hover/line:opacity-0 transition-opacity">5</span><span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] opacity-0 group-hover/line:opacity-100 text-white/40 anchor-icon transition-all">lock_open</span></div>
           </div>
-          <div class="space-y-1.5">
-            <p><span class="text-primary/60">&lt;!DOCTYPE</span> <span class="text-primary">html</span><span class="text-primary/60">&gt;</span></p>
-            <p><span class="text-primary/60">&lt;h1&gt;</span>Hello, Weightless World<span class="text-primary/60">&lt;/h1&gt;</span></p>
-            <div class="inline-block w-0.5 h-5 bg-primary animate-pulse align-middle"></div>
+          <div class="pr-16 h-full overflow-y-auto custom-scrollbar text-left relative z-10" dir="ltr" id="code-content-container">
+            <div class="space-y-[4px] mt-8 text-[15px]">
+              <div class="py-1 px-2 rounded transition-all code-row border-r-[3px] border-transparent" id="code-line-1"><span class="text-white/20 italic">&lt;!-- Code Space Placeholder --&gt;</span></div>
+              <div class="py-1 px-2 rounded transition-all code-row ai-generated-code border-r-[3px] border-transparent" id="code-line-2"><span class="text-primary/60">&lt;!DOCTYPE</span> <span class="text-primary">html</span><span class="text-primary/60">&gt;</span></div>
+              <div class="py-1 px-2 rounded transition-all code-row ai-generated-code border-r-[3px] border-transparent" id="code-line-3"><span class="text-primary/60">&lt;h1&gt;</span>Hello, Weightless World<span class="text-primary/60">&lt;/h1&gt;</span></div>
+              <div class="py-1 px-2 rounded transition-all code-row border-r-[3px] border-transparent" id="code-line-4"><span class="text-white/10 italic">&lt;!-- Anchor to protect --&gt;</span></div>
+              <div class="py-1 px-2 rounded transition-all code-row border-r-[3px] border-transparent flex items-center h-[28px]" id="code-line-5"><div class="inline-block w-0.5 h-5 bg-primary animate-pulse"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow Mode (Hidden by default) -->
+        <div id="flow-mode-view" class="absolute inset-0 p-8 h-full w-full opacity-0 pointer-events-none transition-opacity duration-300 flex flex-wrap gap-4 items-start content-start" style="background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 20px 20px;">
+          <div class="glass-card border border-primary/30 p-4 rounded-xl flex items-center gap-3 cursor-move shadow-lg shadow-primary/10 transition-all w-64 bg-surface/90">
+             <span class="material-symbols-outlined text-primary text-3xl">data_object</span>
+             <div>
+               <h3 class="text-white/90 text-sm font-bold">Document Setup</h3>
+               <p class="text-white/40 text-[10px]">HTML5 Boilerplate</p>
+             </div>
+          </div>
+          <div class="glass-card border border-white/10 p-4 rounded-xl flex items-center gap-3 cursor-move hover:border-primary/50 transition-all w-64 bg-surface/50">
+             <span class="material-symbols-outlined text-white/70 text-3xl">title</span>
+             <div>
+               <h3 class="text-white/90 text-sm font-bold">Heading Row</h3>
+               <p class="text-white/40 text-[10px]">Hello, Weightless World</p>
+             </div>
           </div>
         </div>
         
-        <!-- Live Floating Preview -->
-        <div class="absolute bottom-6 left-6 w-64 h-48 glass-card rounded-xl shadow-2xl overflow-hidden flex flex-col group transition-all duration-300 hover:w-80 hover:h-60 z-20" id="floating-preview">
-          <div class="px-3 py-2 flex items-center justify-between border-b border-white/5 bg-white/5">
-            <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div><span class="text-[10px] font-bold text-white/60 uppercase">Live Preview</span></div>
-            <button class="p-1 hover:bg-white/10 rounded" onclick="switchToTab(2)"><span class="material-symbols-outlined text-[14px] text-white/40">open_in_new</span></button>
+        <!-- Live Preview Mode (Hidden by default) -->
+        <div id="live-preview-mode-view" class="absolute inset-0 bg-white h-full w-full opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col z-[25] rounded-[16px] overflow-hidden">
+          <div class="px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-gray-50/80 backdrop-blur-sm">
+            <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div><span class="text-xs font-bold text-gray-700 uppercase tracking-wide">Live Preview</span></div>
+            <div class="flex items-center gap-3">
+              <button id="btn-visual-fix" class="px-4 py-2 hover:bg-primary/10 rounded-md text-gray-500 hover:text-primary transition-colors flex items-center gap-2 group/btn" title="التصحيح البصري (Visual Fix)">
+                <span class="material-symbols-outlined text-[18px] transition-transform group-hover/btn:rotate-12">auto_fix_high</span>
+                <span class="text-xs font-bold">العصا السحرية</span>
+              </button>
+              <button class="p-2 hover:bg-gray-200 rounded-md text-gray-500 transition-colors" title="فتح في نافذة"><span class="material-symbols-outlined text-[18px]">open_in_new</span></button>
+            </div>
           </div>
-          <div class="flex-1 bg-white overflow-hidden">
-            <iframe id="floating-preview-iframe" class="w-full h-full border-none pointer-events-none scale-75 origin-top"></iframe>
+          <div id="live-preview-content" class="flex-1 flex items-center justify-center p-8 relative group/preview overflow-auto bg-white">
+            <h1 class="text-bg font-bold text-center text-4xl hover-target transition-all" dir="ltr" data-zge-element="Main Title (H1)">Hello, Weightless World</h1>
+            
+            <div id="visual-fix-overlay" class="absolute inset-0 bg-primary/10 border-2 border-primary border-dashed opacity-0 pointer-events-none transition-opacity z-10 flex items-center justify-center backdrop-blur-[1px]">
+               <span class="bg-primary text-bg px-6 py-3 rounded-full text-sm font-bold shadow-lg animate-bounce">اضغط على العنصر لتخصيصه وتصحيحه بصرياً</span>
+            </div>
           </div>
         </div>
       </div>
@@ -186,68 +279,145 @@
 	
 	    <!-- 1: Assistant Sidebar (Right in RTL) -->
     <aside class="chat-width bg-surface/40 h-full flex flex-col border-l border-white/5 shrink-0">
-      <div class="h-[64px] flex items-center justify-between px-6 border-b border-white/5 bg-surface/50">
-        <div class="flex items-center gap-3">
+      <div class="h-[64px] flex items-center justify-between px-6 border-b border-white/5 bg-surface/50 shrink-0">
+        <div class="flex items-center gap-2">
           <span class="material-symbols-outlined text-primary text-xl animate-pulse-soft" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
           <h2 class="text-sm font-bold text-white/90">Vibe Assistant</h2>
         </div>
+        <!-- Vibe Tabs -->
+        <div class="flex items-center gap-1 bg-white/5 p-1 rounded-lg">
+          <button class="px-3 py-1 bg-surface rounded-md text-primary text-xs font-bold border border-white/10 shadow-sm transition-all" id="tab-chat" onclick="toggleVibeTab('chat')">💬 Chat</button>
+          <button class="px-3 py-1 text-white/50 text-xs font-bold hover:text-white/90 transition-all" id="tab-intent" onclick="toggleVibeTab('intent')">📜 Intent</button>
+        </div>
       </div>
 
-      <div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-6">
-        <div class="flex flex-col gap-2 items-start max-w-[90%]">
-          <div class="flex items-center gap-2 mb-1">
-            <div class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-              <span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+      <div id="vibe-chat-view" class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-6">
+          <div class="flex flex-col gap-2 items-start max-w-[90%]">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+              </div>
+              <span class="text-[10px] font-bold text-primary/80 uppercase tracking-tighter">Gemini</span>
             </div>
-            <span class="text-[10px] font-bold text-primary/80 uppercase tracking-tighter">Gemini</span>
+            <div class="p-4 rounded-2xl rounded-tr-none bg-white/5 backdrop-blur-md border border-white/10 text-[13px] leading-relaxed text-white/80 shadow-sm">
+              أهلاً بك! أنا مساعد Vibe Coding الخاص بك. كيف يمكنني مساعدتك اليوم؟
+            </div>
           </div>
-          <div class="p-4 rounded-2xl rounded-tr-none bg-white/5 backdrop-blur-md border border-white/10 text-[13px] leading-relaxed text-white/80 shadow-sm">
-            أهلاً بك! أنا مساعد Vibe Coding الخاص بك. كيف يمكنني مساعدتك اليوم؟
+        </div>
+
+        <div class="p-4 bg-surface/60 border-t border-white/5 relative z-20 flex flex-col gap-3 shrink-0">
+          <div class="w-full flex items-center gap-1 group/chips mb-3">
+            <button class="shrink-0 text-white/40 hover:text-primary opacity-50 hover:opacity-100 transition-all focus:outline-none flex items-center justify-center cursor-pointer hover:scale-110" onmouseover="startScrollChips(2)" onmouseout="stopScrollChips()">
+              <span class="material-symbols-outlined text-[20px]">keyboard_arrow_right</span>
+            </button>
+            <div id="chips-container" class="flex-1 overflow-x-auto flex items-center gap-1.5 pb-1 [&::-webkit-scrollbar]:hidden" style="scrollbar-width: none;">
+              <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[11px] text-primary/80">palette</span>
+                تغيير ألوان الهيدر
+              </button>
+              <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[11px] text-primary/80">login</span>
+                أضف زر تسجيل دخول
+              </button>
+              <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[11px] text-primary/80">devices</span>
+                الاستجابة المتجاوبة
+              </button>
+              <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[11px] text-primary/80">psychology</span>
+                شرح الكود الحالي
+              </button>
+            </div>
+            <button class="shrink-0 text-white/40 hover:text-primary opacity-50 hover:opacity-100 transition-all focus:outline-none flex items-center justify-center cursor-pointer hover:scale-110" onmouseover="startScrollChips(-2)" onmouseout="stopScrollChips()">
+              <span class="material-symbols-outlined text-[20px]">keyboard_arrow_left</span>
+            </button>
+          </div>
+
+          <!-- Dialogue Negotiation -->
+          <div class="flex flex-col gap-1.5 mb-2" id="negotiation-container">
+            <span class="text-[10px] text-white/40 font-bold px-1">حدد النية لتوجيه التوليد المعماري:</span>
+            <div class="flex gap-2 w-full overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style="scrollbar-width: none;">
+               <button class="shrink-0 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface/50 border border-primary/20 hover:border-primary/60 text-primary text-[10px] font-bold shadow-[0_0_10px_rgba(138,180,248,0.05)] hover:shadow-[0_0_15px_rgba(138,180,248,0.2)] transition-all relative overflow-hidden group/nego" onclick="selectNegotiation(this)">
+                  <span class="absolute inset-0 bg-primary/10 w-0 group-hover/nego:w-full transition-all duration-300"></span>
+                  <span class="material-symbols-outlined text-[14px]">speed</span>
+                  <span class="relative z-10">أداء عالٍ</span>
+               </button>
+               <button class="shrink-0 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface/50 border border-purple-400/20 hover:border-purple-400/60 text-purple-400 text-[10px] font-bold shadow-[0_0_10px_rgba(192,132,252,0.05)] hover:shadow-[0_0_15px_rgba(192,132,252,0.2)] transition-all relative overflow-hidden group/nego" onclick="selectNegotiation(this)">
+                  <span class="absolute inset-0 bg-purple-400/10 w-0 group-hover/nego:w-full transition-all duration-300"></span>
+                  <span class="material-symbols-outlined text-[14px]">palette</span>
+                  <span class="relative z-10">تصميم جمالي</span>
+               </button>
+               <button class="shrink-0 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface/50 border border-emerald-400/20 hover:border-emerald-400/60 text-emerald-400 text-[10px] font-bold shadow-[0_0_10px_rgba(52,211,153,0.05)] hover:shadow-[0_0_15px_rgba(52,211,153,0.2)] transition-all relative overflow-hidden group/nego" onclick="selectNegotiation(this)">
+                  <span class="absolute inset-0 bg-emerald-400/10 w-0 group-hover/nego:w-full transition-all duration-300"></span>
+                  <span class="material-symbols-outlined text-[14px]">security</span>
+                  <span class="relative z-10">أمان مكثف</span>
+               </button>
+            </div>
+          </div>
+
+          <div class="bg-bg/50 border border-white/10 rounded-[12px] flex flex-col focus-within:ring-1 focus-within:ring-primary/50 focus-within:border-primary/50 transition-all shadow-inner">
+            <textarea class="w-full bg-transparent border-none py-3 px-4 text-xs text-white placeholder:text-white/20 focus:ring-0 resize-none min-h-[60px]" placeholder="اسأل عن أي شيء..."></textarea>
+            <div class="flex items-center justify-between px-2 pb-2">
+              <div class="flex items-center gap-1">
+                <md-icon-button aria-label="صوت" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon class="animate-mic-pulse text-primary">mic</md-icon></md-icon-button>
+                <md-icon-button aria-label="ملف" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>attach_file</md-icon></md-icon-button>
+                <md-icon-button aria-label="صورة" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>image</md-icon></md-icon-button>
+                <md-icon-button aria-label="كود" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>code</md-icon></md-icon-button>
+              </div>
+              <button class="w-8 h-8 rounded-[8px] bg-primary text-bg flex items-center justify-center shadow-lg relative overflow-hidden group cursor-pointer">
+                <md-ripple></md-ripple>
+                <span class="material-symbols-outlined text-[16px] transform -scale-x-100" style="font-variation-settings: 'FILL' 1;">send</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="p-4 bg-surface/60 border-t border-white/5 relative z-20 flex flex-col gap-3">
-        <div class="w-full flex items-center gap-1 group/chips">
-          <button class="shrink-0 text-white/40 hover:text-primary opacity-50 hover:opacity-100 transition-all focus:outline-none flex items-center justify-center cursor-pointer hover:scale-110" onmouseover="startScrollChips(2)" onmouseout="stopScrollChips()">
-            <span class="material-symbols-outlined text-[20px]">keyboard_arrow_right</span>
-          </button>
-          <div id="chips-container" class="flex-1 overflow-x-auto flex items-center gap-1.5 pb-1 [&::-webkit-scrollbar]:hidden" style="scrollbar-width: none;">
-            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[11px] text-primary/80">palette</span>
-              تغيير ألوان الهيدر
-            </button>
-            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[11px] text-primary/80">login</span>
-              أضف زر تسجيل دخول
-            </button>
-            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[11px] text-primary/80">devices</span>
-              الاستجابة المتجاوبة
-            </button>
-            <button class="shrink-0 px-2.5 py-1 rounded-[6px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-[9px] font-medium text-white/80 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[11px] text-primary/80">psychology</span>
-              شرح الكود الحالي
-            </button>
-          </div>
-          <button class="shrink-0 text-white/40 hover:text-primary opacity-50 hover:opacity-100 transition-all focus:outline-none flex items-center justify-center cursor-pointer hover:scale-110" onmouseover="startScrollChips(-2)" onmouseout="stopScrollChips()">
-            <span class="material-symbols-outlined text-[20px]">keyboard_arrow_left</span>
-          </button>
-        </div>
-
-        <div class="bg-bg/50 border border-white/10 rounded-[12px] flex flex-col focus-within:ring-1 focus-within:ring-primary/50 focus-within:border-primary/50 transition-all shadow-inner">
-          <textarea class="w-full bg-transparent border-none py-3 px-4 text-xs text-white placeholder:text-white/20 focus:ring-0 resize-none min-h-[60px]" placeholder="اسأل عن أي شيء..."></textarea>
-          <div class="flex items-center justify-between px-2 pb-2">
-            <div class="flex items-center gap-1">
-              <md-icon-button aria-label="صوت" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon class="animate-mic-pulse text-primary">mic</md-icon></md-icon-button>
-              <md-icon-button aria-label="ملف" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>attach_file</md-icon></md-icon-button>
-              <md-icon-button aria-label="صورة" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>image</md-icon></md-icon-button>
-              <md-icon-button aria-label="كود" style="--md-icon-button-state-layer-size: 28px; --md-icon-button-icon-size: 18px;"><md-icon>code</md-icon></md-icon-button>
+      <!-- Intent Log View (Hidden by default) -->
+      <div id="vibe-intent-view" class="hidden flex-1 overflow-y-auto custom-scrollbar p-6 bg-surface/30">
+        <div class="relative border-r border-white/10 pr-6 space-y-8 ml-2 mt-4">
+          <!-- Item 1 -->
+          <div class="relative group/intent">
+            <div class="absolute -right-[29px] top-1 w-3 h-3 rounded-full bg-primary ring-4 ring-bg/80 group-hover/intent:ring-primary/20 transition-all"></div>
+            <div class="bg-white/5 border border-white/10 rounded-xl p-4 shadow-sm hover:border-primary/30 transition-colors">
+              <div class="flex items-center justify-between mb-2">
+                 <div class="flex items-center gap-2">
+                   <span class="material-symbols-outlined text-[16px] text-primary">architecture</span>
+                   <span class="text-xs font-bold text-white/90">استخدام React Context</span>
+                 </div>
+                 <span class="text-[9px] text-white/30 font-code">2 hours ago</span>
+              </div>
+              <p class="text-[11px] text-white/50 leading-relaxed">تم الاعتماد على Context API لإدارة الحالة بدلاً من Redux لتقليل التعقيد وتسريع الأداء في هذه المرحلة المبكرة من المشروع.</p>
             </div>
-            <button class="w-8 h-8 rounded-[8px] bg-primary text-bg flex items-center justify-center shadow-lg relative overflow-hidden group cursor-pointer">
-              <md-ripple></md-ripple>
-              <span class="material-symbols-outlined text-[16px] transform -scale-x-100" style="font-variation-settings: 'FILL' 1;">send</span>
-            </button>
+          </div>
+          <!-- Item 2 -->
+          <div class="relative group/intent">
+            <div class="absolute -right-[29px] top-1 w-3 h-3 rounded-full bg-amber-400 ring-4 ring-bg/80 group-hover/intent:ring-amber-400/20 transition-all"></div>
+            <div class="bg-white/5 border border-white/10 rounded-xl p-4 shadow-sm hover:border-amber-400/30 transition-colors">
+              <div class="flex items-center justify-between mb-2">
+                 <div class="flex items-center gap-2">
+                   <span class="material-symbols-outlined text-[16px] text-amber-400">design_services</span>
+                   <span class="text-xs font-bold text-white/90">تصميم Flexbox بدلاً من Grid</span>
+                 </div>
+                 <span class="text-[9px] text-white/30 font-code">Yesterday</span>
+              </div>
+              <p class="text-[11px] text-white/50 leading-relaxed">المرونة المطلوبة في الشريط الجانبي تتطلب Flexbox لتمدد العناصر بشكل طبيعي، وهذا يفيد في سهولة صيانة واجهة المحرر.</p>
+            </div>
+          </div>
+          <!-- Item 3 -->
+          <div class="relative group/intent">
+            <div class="absolute -right-[29px] top-1 w-3 h-3 rounded-full bg-green-400 ring-4 ring-bg/80 group-hover/intent:ring-green-400/20 transition-all"></div>
+            <div class="bg-white/5 border border-white/10 rounded-xl p-4 shadow-sm hover:border-green-400/30 transition-colors">
+              <div class="flex items-center justify-between mb-2">
+                 <div class="flex items-center gap-2">
+                   <span class="material-symbols-outlined text-[16px] text-green-400">api</span>
+                   <span class="text-xs font-bold text-white/90">فصل واجهة التطبيقات (API)</span>
+                 </div>
+                 <span class="text-[9px] text-white/30 font-code">Yesterday</span>
+              </div>
+              <p class="text-[11px] text-white/50 leading-relaxed">عزل كل ما يخص الـ API في مجلد منفصل لتسهيل الانتقال لبيئة إنتاج والتعديل دون لمس كود واجهة المستخدم.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -259,33 +429,37 @@
   <footer class="bg-bg/90 statusbar-height flex flex-row-reverse items-center justify-start px-6 gap-8 z-50 text-[11px] font-medium border-t border-white/5">
     <div class="flex items-center gap-2 text-primary cursor-pointer"><span class="material-symbols-outlined text-[16px]">account_tree</span><span class="font-bold">main</span></div>
     <div class="flex items-center gap-2 text-white/30 cursor-pointer"><span class="material-symbols-outlined text-[16px]">language</span><span>UTF-8</span></div>
+    
+    <!-- Code Provenance Toggle -->
+    <div class="flex items-center gap-2 text-white/50 cursor-pointer bg-white/5 px-3 py-1 rounded-[6px] hover:bg-white/10 transition-colors mr-2">
+      <span class="material-symbols-outlined text-[14px] text-primary/70">pattern</span>
+      <span class="font-bold tracking-wider text-[9px] mr-1">بصمة AI</span>
+      <label class="relative inline-flex items-center cursor-pointer ml-1 scale-[0.7] translate-y-[1px]">
+        <input type="checkbox" id="ai-highlights-toggle" class="sr-only peer">
+        <div class="w-9 h-5 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-white after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary/80 shadow-inner"></div>
+      </label>
+    </div>
+
     <div class="mr-auto flex items-center gap-4 border-r border-white/5 pr-6 h-full">
       <div class="flex items-center gap-3 px-3 py-0.5 rounded-full bg-white/5 border border-white/5 hover:bg-white/10 cursor-pointer">
         <span class="material-symbols-outlined text-[14px] text-primary/80">play_arrow</span>
         <span class="text-white/40 text-[10px]">Lo-fi Focus 🎧</span>
       </div>
-      <div class="flex items-center gap-3"><span class="text-primary/80">Gemini Connected</span><div class="w-2 h-2 bg-green-400 rounded-full"></div></div>
+      <div class="flex items-center gap-3 relative group/reality cursor-pointer" onclick="toggleRealityCheck()">
+        <span class="text-primary/80">Gemini Connected</span>
+        <div id="reality-dot" class="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.6)] relative"></div>
+        
+        <!-- Tooltip Reality Check -->
+        <div class="absolute bottom-full right-0 mb-3 w-40 bg-surface/95 backdrop-blur-md shadow-2xl border border-white/10 rounded-xl p-3 opacity-0 group-hover/reality:opacity-100 transition-all pointer-events-none z-[200] translate-y-1 group-hover/reality:translate-y-0">
+           <div class="text-[11px] font-bold text-green-400 mb-1" id="reality-tooltip-title">Code Reliability: High</div>
+           <div class="text-[10px] text-white/60 leading-relaxed" id="reality-tooltip-desc">الموثوقية تجاوزت بناءً على خلوه من الأخطاء: <span class="font-bold text-white/90">99%</span></div>
+           <div class="absolute -bottom-1.5 right-4 w-3 h-3 bg-surface/95 border-b border-l border-white/10 rotate-[-45deg]"></div>
+        </div>
+      </div>
     </div>
   </footer>
 
   <!-- Modals & Overlays -->
-  <div class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-6" id="preview-modal">
-    <div class="bg-surface/90 border border-white/10 rounded-[24px] w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl">
-      <div class="p-6 border-b border-white/5 flex items-center justify-between bg-surface/50">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-primary">visibility</span>
-          <h2 class="text-xl font-bold text-white">معاينة المشروع</h2>
-        </div>
-        <button class="p-2 hover:bg-white/10 rounded-full text-white/60 transition-all" onclick="closeModals()">
-          <span class="material-symbols-outlined">close</span>
-        </button>
-      </div>
-      <div class="flex-1 bg-white overflow-hidden rounded-b-[24px]">
-        <iframe id="modal-preview-iframe" class="w-full h-full border-none"></iframe>
-      </div>
-    </div>
-  </div>
-
   <div class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-6" id="templates-modal">
     <div class="bg-surface/90 border border-white/10 rounded-[24px] w-full max-w-4xl max-h-[80vh] flex flex-col shadow-2xl">
       <div class="p-8 border-b border-white/5 flex items-center justify-between">
@@ -314,5 +488,312 @@
   <!-- Core Scripts -->
   <script src="./logic/ui-controller.js"></script>
   <script src="./logic/main-flow.js"></script>
+
+  <!-- Flow Coding Interactions Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // --- 1. The Fluid Slider Logic ---
+      const fluidSlider = document.getElementById('fluid-slider-toggle');
+      const codeView = document.getElementById('code-mode-view');
+      const flowView = document.getElementById('flow-mode-view');
+      const modeTextCode = document.getElementById('mode-text-code');
+      const modeTextFlow = document.getElementById('mode-text-flow');
+
+      // --- 1. Mode Switch Logic ---
+      window.switchEditorMode = function(mode) {
+         const codeView = document.getElementById('code-mode-view');
+         const flowView = document.getElementById('flow-mode-view');
+         const previewView = document.getElementById('live-preview-mode-view');
+         const btnCode = document.getElementById('btn-mode-code');
+         const btnFlow = document.getElementById('btn-mode-flow');
+
+         [codeView, flowView, previewView].forEach(view => {
+             if(view) {
+                 view.classList.replace('opacity-100', 'opacity-0');
+                 view.classList.add('pointer-events-none');
+             }
+         });
+         
+         const activeClasses = ['bg-white/10', 'text-primary', 'shadow-sm'];
+         const inactiveClasses = ['text-white/40', 'hover:text-white/80'];
+         
+         [btnCode, btnFlow].forEach(btn => {
+             if(btn) {
+                 btn.classList.remove(...activeClasses);
+                 btn.classList.add(...inactiveClasses);
+             }
+         });
+
+         if (mode === 'code' && codeView) {
+             codeView.classList.replace('opacity-0', 'opacity-100');
+             codeView.classList.remove('pointer-events-none');
+             if(btnCode) {
+                btnCode.classList.remove(...inactiveClasses);
+                btnCode.classList.add(...activeClasses);
+             }
+         } else if (mode === 'flow' && flowView) {
+             flowView.classList.replace('opacity-0', 'opacity-100');
+             flowView.classList.remove('pointer-events-none');
+             if(btnFlow) {
+                btnFlow.classList.remove(...inactiveClasses);
+                btnFlow.classList.add(...activeClasses);
+             }
+         } else if (mode === 'preview' && previewView) {
+             previewView.classList.replace('opacity-0', 'opacity-100');
+             previewView.classList.remove('pointer-events-none');
+         }
+      };
+
+      // --- Global Navigation Link (Header Tabs) ---
+      const originalSwitchToTab = window.switchToTab;
+      window.switchToTab = function(tabId) {
+         // Call original if exists
+         if(typeof originalSwitchToTab === 'function') {
+            originalSwitchToTab(tabId);
+         }
+         
+         // Visual Header Tabs update
+         const navLinks = document.querySelectorAll('.nav-link');
+         navLinks.forEach((link, idx) => {
+             if (idx + 1 === tabId) {
+                 link.classList.remove('text-white/60');
+                 link.classList.add('active', 'text-primary');
+             } else {
+                 link.classList.remove('active', 'text-primary');
+                 link.classList.add('text-white/60');
+             }
+         });
+
+         // Tie 'المعاينة' (tabId=2) to Live Preview, and 'محرر الأكواد' (tabId=1) to Code Mode
+         if (tabId === 1) {
+             document.getElementById('btn-mode-code').style.display = '';
+             document.getElementById('btn-mode-flow').style.display = '';
+             switchEditorMode('code');
+         } else if (tabId === 2) {
+             document.getElementById('btn-mode-code').style.display = 'none';
+             document.getElementById('btn-mode-flow').style.display = 'none';
+             switchEditorMode('preview');
+         }
+      };
+
+      // --- 2. Visual Fix Logic ---
+      const btnVisualFix = document.getElementById('btn-visual-fix');
+      const previewContent = document.getElementById('live-preview-content');
+      const fixOverlay = document.getElementById('visual-fix-overlay');
+      const chatInput = document.querySelector('textarea[placeholder="اسأل عن أي شيء..."]');
+      let isVisualFixMode = false;
+
+      if (btnVisualFix && previewContent && chatInput) {
+        btnVisualFix.addEventListener('click', () => {
+          isVisualFixMode = !isVisualFixMode;
+          toggleVisualFixState();
+        });
+
+        function toggleVisualFixState() {
+          const elements = previewContent.querySelectorAll('.hover-target');
+          if (isVisualFixMode) {
+            btnVisualFix.classList.replace('text-white/40', 'text-primary');
+            btnVisualFix.classList.add('bg-primary/20');
+            fixOverlay.classList.replace('opacity-0', 'opacity-100');
+            elements.forEach(el => {
+              el.style.cursor = 'crosshair';
+              el.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-white', 'cursor-crosshair');
+              el.addEventListener('click', handleElementSelect);
+            });
+          } else {
+            btnVisualFix.classList.replace('text-primary', 'text-white/40');
+            btnVisualFix.classList.remove('bg-primary/20');
+            fixOverlay.classList.replace('opacity-100', 'opacity-0');
+            elements.forEach(el => {
+              el.style.cursor = '';
+              el.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-white', 'cursor-crosshair');
+              el.removeEventListener('click', handleElementSelect);
+            });
+          }
+        }
+
+        function handleElementSelect(e) {
+          if (!isVisualFixMode) return;
+          e.stopPropagation();
+          const elName = e.currentTarget.getAttribute('data-zge-element') || e.currentTarget.tagName.toLowerCase();
+          
+          // Insert text and focus
+          chatInput.value = `أريد تعديل هذا العنصر: [${elName}] - `;
+          chatInput.focus();
+          
+          // Deactivate Fix Mode
+          isVisualFixMode = false;
+          toggleVisualFixState();
+          
+          // Blink effect to feedback
+          e.currentTarget.classList.add('opacity-50');
+          setTimeout(() => e.currentTarget.classList.remove('opacity-50'), 200);
+        }
+      }
+
+      // --- 3. Human Anchor Logic ---
+      window.toggleHumanAnchor = function(elem, lineNum) {
+        const icon = elem.querySelector('.anchor-icon');
+        const codeLine = document.getElementById(`code-line-${lineNum}`);
+        
+        if (icon.innerText === 'lock_open') {
+          // Lock it
+          icon.innerText = 'lock';
+          icon.classList.replace('text-white/40', 'text-amber-400');
+          icon.classList.replace('opacity-0', 'opacity-100'); // Keep visible
+          elem.querySelector('span:first-child').classList.add('opacity-0'); // keeping the number hidden
+          
+          if(codeLine) {
+            codeLine.style.backgroundImage = 'repeating-linear-gradient(45deg, rgba(255, 191, 0, 0.05) 0px, rgba(255, 191, 0, 0.05) 4px, transparent 4px, transparent 8px)';
+            codeLine.style.borderColor = 'rgba(255,191,0,0.5)';
+          }
+        } else {
+          // Unlock it
+          icon.innerText = 'lock_open';
+          icon.classList.replace('text-amber-400', 'text-white/40');
+          icon.classList.replace('opacity-100', 'opacity-0'); // Let hover handle it again
+          elem.querySelector('span:first-child').classList.remove('opacity-0');
+          
+          if(codeLine) {
+            codeLine.style.backgroundImage = '';
+            codeLine.style.borderColor = 'transparent';
+          }
+        }
+      };
+
+      // --- 4. Code Provenance (AI Highlights) Logic ---
+      const aiHighlightBtn = document.getElementById('ai-highlights-toggle');
+      if (aiHighlightBtn) {
+        aiHighlightBtn.addEventListener('change', (e) => {
+          const aiLines = document.querySelectorAll('.ai-generated-code');
+          if (e.target.checked) {
+            aiLines.forEach(line => {
+              line.style.backgroundColor = 'rgba(0, 150, 255, 0.15)';
+              line.style.borderColor = 'rgba(0, 150, 255, 0.5)';
+            });
+          } else {
+            aiLines.forEach(line => {
+              line.style.backgroundColor = '';
+              line.style.borderColor = 'transparent';
+              // Check if it's locked by anchor, restore anchor border color
+              const lineId = line.id.split('-').pop();
+              const lockIcon = document.querySelector(`.group\\/line[onclick*="(${lineId})"] .anchor-icon`);
+              if (lockIcon && lockIcon.innerText === 'lock') {
+                line.style.borderColor = 'rgba(255,191,0,0.5)';
+              }
+            });
+          }
+        });
+      }
+    });
+
+    // --- 5. Vibe Tabs Logic ---
+    window.toggleVibeTab = function(tabName) {
+      const chatTab = document.getElementById('tab-chat');
+      const intentTab = document.getElementById('tab-intent');
+      const chatView = document.getElementById('vibe-chat-view');
+      const intentView = document.getElementById('vibe-intent-view');
+
+      const activeClasses = ['bg-surface', 'text-primary', 'border', 'border-white/10', 'shadow-sm'];
+      const inactiveClasses = ['text-white/50', 'hover:text-white/90'];
+
+      if (tabName === 'chat') {
+         chatView.classList.remove('hidden');
+         intentView.classList.add('hidden');
+         
+         chatTab.classList.remove(...inactiveClasses);
+         chatTab.classList.add(...activeClasses);
+         intentTab.classList.remove(...activeClasses);
+         intentTab.classList.add(...inactiveClasses);
+      } else {
+         chatView.classList.add('hidden');
+         intentView.classList.remove('hidden');
+         
+         intentTab.classList.remove(...inactiveClasses);
+         intentTab.classList.add(...activeClasses);
+         chatTab.classList.remove(...activeClasses);
+         chatTab.classList.add(...inactiveClasses);
+      }
+    };
+
+    // --- 6. Reality Check Logic ---
+    const realityStates = [
+      { color: 'bg-green-400', shadow: 'shadow-[0_0_8px_rgba(74,222,128,0.6)]', titleText: 'text-green-400', title: 'Code Reliability: High', desc: 'الموثوقية تجاوزت بناءً على خلوه من الأخطاء: <span class="font-bold text-white/90">99%</span>' },
+      { color: 'bg-amber-400', shadow: 'shadow-[0_0_8px_rgba(251,191,36,0.6)]', titleText: 'text-amber-400', title: 'Code Reliability: Medium', desc: 'يُفضل مراجعة المنطق البشري قبل الحفظ: <span class="font-bold text-white/90">تعديل مطلوب</span>' },
+      { color: 'bg-red-500', shadow: 'shadow-[0_0_8px_rgba(239,68,68,0.6)]', titleText: 'text-red-400', title: 'Code Reliability: Low', desc: 'ثقة النظام منخفضة، احتمالية ملحوظة للـ <span class="font-bold text-white/90">Hallucination</span>' }
+    ];
+    let currentRealityIdx = 0;
+    
+    window.toggleRealityCheck = function() {
+      currentRealityIdx = (currentRealityIdx + 1) % realityStates.length;
+      const state = realityStates[currentRealityIdx];
+      
+      const dot = document.getElementById('reality-dot');
+      const title = document.getElementById('reality-tooltip-title');
+      const desc = document.getElementById('reality-tooltip-desc');
+      
+      dot.className = `w-2.5 h-2.5 rounded-full animate-pulse relative transition-colors duration-300 ${state.color} ${state.shadow}`;
+      title.className = `text-[11px] font-bold mb-1 transition-colors ${state.titleText}`;
+      title.innerText = state.title;
+      desc.innerHTML = state.desc;
+    };
+
+    // --- 7. Component Panel Logic ---
+    window.toggleComponentPanel = function() {
+      const panel = document.getElementById('component-panel');
+      if (panel.classList.contains('opacity-0')) {
+         panel.classList.remove('opacity-0', 'pointer-events-none');
+         panel.classList.replace('-translate-x-4', 'translate-x-0');
+         panel.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+         panel.classList.remove('opacity-100', 'pointer-events-auto');
+         panel.classList.replace('translate-x-0', '-translate-x-4');
+         panel.classList.add('opacity-0', 'pointer-events-none');
+      }
+    };
+
+    window.addComponent = function(el) {
+      const btn = el.querySelector('button');
+      const icon = btn.innerHTML;
+      btn.innerHTML = `<span class="material-symbols-outlined text-[14px] animate-spin">sync</span>`;
+      el.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-surface');
+      setTimeout(() => {
+         btn.innerHTML = `<span class="material-symbols-outlined text-[14px]">check</span>`;
+         setTimeout(() => {
+            btn.innerHTML = icon;
+            el.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-surface');
+         }, 1000);
+      }, 600);
+    };
+
+    // --- 8. Dialogue Negotiation Logic ---
+    window.selectNegotiation = function(btn) {
+       const container = document.getElementById('negotiation-container');
+       const buttons = container.querySelectorAll('button');
+       buttons.forEach(b => {
+          b.classList.remove('ring-2', 'ring-offset-2', 'ring-offset-surface', 'ring-primary', 'ring-purple-400', 'ring-emerald-400');
+          b.style.transform = 'scale(1)';
+       });
+       
+       btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-surface');
+       if(btn.classList.contains('text-primary')) btn.classList.add('ring-primary');
+       else if(btn.classList.contains('text-purple-400')) btn.classList.add('ring-purple-400');
+       else if(btn.classList.contains('text-emerald-400')) btn.classList.add('ring-emerald-400');
+       
+       btn.style.transform = 'scale(0.95)';
+       setTimeout(() => {
+          btn.style.transform = 'scale(1)';
+       }, 150);
+       
+       const textarea = document.querySelector('textarea[placeholder="اسأل عن أي شيء..."]');
+       if(textarea) {
+          const intentTxt = btn.querySelector('.z-10').innerText;
+          // Clear previous intent format if exists
+          textarea.value = textarea.value.replace(/^\[النية: .*\] - /, '');
+          textarea.value = `[النية: ${intentTxt}] - ` + textarea.value;
+          textarea.focus();
+       }
+    };
+  </script>
 </body>
 </html>
