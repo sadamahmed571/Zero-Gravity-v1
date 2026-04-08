@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>First Flow Mobile | Master Your Intent</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- ✅ Material Web Components (md-) -->
+  <script type="module" src="https://esm.run/@material/web/all.js"></script>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": { DEFAULT: "#8AB4F8", light: "#1A73E8" },
+            "surface": { DEFAULT: "#1A1C2E", light: "#FFFFFF" },
+            "bg": { DEFAULT: "#0F111A", light: "#F8F9FA" },
+            "cyan": { DEFAULT: "#8AB4F8" }
+          },
+          borderRadius: { "outer": "12px", "button": "8px" },
+          fontFamily: {
+            "ui": ["'Noto Sans Arabic'", "'Readex Pro'", "sans-serif"],
+            "code": ["'Fira Code'", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+
+  <link rel="stylesheet" href="./assets/css/ff-core.css">
+  <link rel="stylesheet" href="./assets/css/mobile-home.css">
+</head>
+
+<body class="h-screen overflow-hidden flex flex-col font-ui bg-bg text-white">
+
+  <!-- Mobile Header -->
+  <header class="h-14 glass-effect sticky top-0 flex items-center justify-between px-4 z-50 border-b border-primary/10">
+    <div class="flex items-center gap-2">
+      <img src="assets/img/logo.png" class="w-6 h-6 object-contain" alt="First Flow Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/5968/5968263.png';">
+      <span class="text-primary font-bold text-sm">First Flow</span>
+      <span class="text-white/30 font-code text-[8px] uppercase tracking-tighter">Mobile</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button id="btn-run-mobile" class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center transition-all active:scale-90">
+        <span class="material-symbols-outlined text-[20px]">play_arrow</span>
+      </button>
+      <div class="w-7 h-7 rounded-full bg-white/5 border border-white/10 overflow-hidden">
+        <img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4GX4GQj46K3X4e3LoCkL2THxy3UOT_gsWaORkL4uUHTpR92cre_j7-sp82n6th1OCK2uDaJeWQgQFb7RuYKw7CB4oAelo4ufXah_kCC4xFGIz-IqP5fHJC_pxIS_nqLOrRQLt0DyE_l4FrxGU9U48K14D9cMyx4SHqaPXQP1IkdimVQgz3_cSlQI13QR8UuEXluP_fK1C-qubf6kRbnFTEX-lcE5TrZDhyNzxZ41zTp3xE78Xao2I2AwiXd4D-Yx3eqChBSO3ZiIu"/>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main id="main-content" class="flex-1 relative overflow-hidden">
+
+    <!-- 1. Editor View -->
+    <div id="view-editor" class="view-pane absolute inset-0 flex flex-col p-2 active">
+       <div class="flex items-center justify-between mb-2 px-1">
+          <div class="flex items-center gap-2">
+             <span class="text-[10px] font-code text-primary bg-primary/10 px-2 py-0.5 rounded">index.html</span>
+          </div>
+          <div class="flex items-center gap-1">
+             <button class="w-7 h-7 flex items-center justify-center rounded-md bg-white/5 text-white/40"><span class="material-symbols-outlined text-[16px]">search</span></button>
+             <button class="w-7 h-7 flex items-center justify-center rounded-md bg-white/5 text-white/40"><span class="material-symbols-outlined text-[16px]">more_vert</span></button>
+          </div>
+       </div>
+       <div class="flex-1 bg-surface/40 rounded-xl border border-white/5 p-3 font-code text-xs overflow-y-auto custom-scrollbar" dir="ltr">
+          <div class="space-y-1 opacity-60">
+             <div class="flex gap-3"><span class="w-4 text-white/20 text-right">1</span><span class="text-primary/60">&lt;!DOCTYPE</span> <span class="text-primary">html</span><span class="text-primary/60">&gt;</span></div>
+             <div class="flex gap-3"><span class="w-4 text-white/20 text-right">2</span><span class="text-primary/60">&lt;html</span> <span class="text-primary">lang=</span><span class="text-amber-200">"ar"</span> <span class="text-primary">dir=</span><span class="text-amber-200">"rtl"</span><span class="text-primary/60">&gt;</span></div>
+             <div class="flex gap-3"><span class="w-4 text-white/20 text-right">3</span><span class="text-primary/60">&lt;body&gt;</span></div>
+             <div class="flex gap-3"><span class="w-4 text-white/20 text-right">4</span>  <span class="text-primary/60">&lt;h1&gt;</span>مرحباً بك في عالم التدفق<span class="text-primary/60">&lt;/h1&gt;</span></div>
+             <div class="flex gap-3"><span class="w-4 text-white/20 text-right">5</span><span class="text-primary/60">&lt;/body&gt;</span></div>
+          </div>
+       </div>
+    </div>
+
+    <!-- 2. AI Assistant View -->
+    <div id="view-ai" class="view-pane absolute inset-0 flex flex-col p-0 translate-y-full transition-transform duration-300">
+       <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+          <div class="flex flex-col gap-1 items-start max-w-[85%]">
+            <div class="flex items-center gap-1.5 mb-0.5 opacity-60">
+              <span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+              <span class="text-[9px] font-bold text-primary tracking-tight uppercase">Gemini</span>
+            </div>
+            <div class="p-3 rounded-2xl rounded-tr-none bg-white/5 border border-white/10 text-[11px] leading-relaxed text-white/80 glass-card">
+              أهلاً بك! كيف يمكنني مساعدتك في تطوير تطبيقك عبر الهاتف؟
+            </div>
+          </div>
+       </div>
+
+       <div class="p-3 bg-surface/90 border-t border-white/5 glass-effect">
+          <div class="flex items-center gap-2 bg-black/40 border border-white/10 rounded-2xl px-3 py-1">
+             <textarea class="flex-1 bg-transparent border-none text-[11px] text-white placeholder:text-white/20 focus:ring-0 resize-none h-10 py-2" placeholder="اكتب رسالتك هنا..."></textarea>
+             <button class="w-8 h-8 rounded-full bg-primary text-bg flex items-center justify-center shadow-lg active:scale-90">
+                <span class="material-symbols-outlined text-[18px] -scale-x-100" style="font-variation-settings: 'FILL' 1;">send</span>
+             </button>
+          </div>
+       </div>
+    </div>
+
+    <!-- 3. Preview View -->
+    <div id="view-preview" class="view-pane absolute inset-0 flex flex-col translate-y-full transition-transform duration-300">
+       <div class="h-10 bg-surface/80 border-b border-white/5 flex items-center px-4 justify-between">
+          <div class="flex items-center gap-2 text-[10px] text-white/40">
+             <span class="material-symbols-outlined text-[14px]">language</span>
+             <span class="font-code truncate max-w-[150px]">preview/index.html</span>
+          </div>
+          <button class="text-primary active:scale-90"><span class="material-symbols-outlined text-[18px]">refresh</span></button>
+       </div>
+       <div class="flex-1 bg-white flex items-center justify-center p-8 text-center">
+          <h1 class="text-bg font-bold text-2xl">مرحباً بك في عالم التدفق</h1>
+       </div>
+    </div>
+
+    <!-- 4. Discovery View -->
+    <div id="view-discovery" class="view-pane absolute inset-0 flex flex-col p-4 overflow-y-auto custom-scrollbar translate-y-full transition-transform duration-300">
+       <h2 class="text-sm font-bold text-white mb-4">قوالب المجتمع</h2>
+       <div class="grid grid-cols-1 gap-4">
+          <div class="glass-card p-3 rounded-xl border border-white/10 space-y-3">
+             <div class="h-24 bg-black/40 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-3xl text-primary/20">dashboard</span>
+             </div>
+             <div>
+                <h3 class="text-[11px] font-bold">لوحة تحكم بسيطة</h3>
+                <p class="text-[9px] text-white/40 mt-1">تصميم مخصص للهواتف بواجهات واضحة.</p>
+             </div>
+             <button class="w-full py-1.5 bg-primary/10 text-primary text-[10px] font-bold rounded-lg border border-primary/20">نسخ القالب</button>
+          </div>
+       </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="h-16 glass-effect border-t border-primary/10 flex items-center justify-around px-2 z-50">
+    <button onclick="switchTab('editor')" class="nav-btn active flex flex-col items-center gap-1 group">
+       <span class="material-symbols-outlined text-[24px] group-active:scale-90 transition-transform">code</span>
+       <span class="text-[9px] font-bold">المحرر</span>
+    </button>
+    <button onclick="switchTab('ai')" class="nav-btn flex flex-col items-center gap-1 group">
+       <span class="material-symbols-outlined text-[24px] group-active:scale-90 transition-transform">smart_toy</span>
+       <span class="text-[9px] font-bold">المساعد</span>
+    </button>
+    <button onclick="switchTab('preview')" class="nav-btn flex flex-col items-center gap-1 group">
+       <span class="material-symbols-outlined text-[24px] group-active:scale-90 transition-transform">visibility</span>
+       <span class="text-[9px] font-bold">المعاينة</span>
+    </button>
+    <button onclick="switchTab('discovery')" class="nav-btn flex flex-col items-center gap-1 group">
+       <span class="material-symbols-outlined text-[24px] group-active:scale-90 transition-transform">grid_view</span>
+       <span class="text-[9px] font-bold">اكتشف</span>
+    </button>
+  </nav>
+
+  <script>
+    function switchTab(tabId) {
+      const btn = event ? event.currentTarget : document.querySelector(`button[onclick*="${tabId}"]`);
+
+      // 1. Update Buttons
+      document.querySelectorAll('.nav-btn').forEach(b => {
+        b.classList.remove('active', 'text-primary');
+        b.classList.add('text-white/40');
+      });
+      if(btn) {
+        btn.classList.add('active', 'text-primary');
+        btn.classList.remove('text-white/40');
+      }
+
+      // 2. Update Views
+      const views = {
+        'editor': document.getElementById('view-editor'),
+        'ai': document.getElementById('view-ai'),
+        'preview': document.getElementById('view-preview'),
+        'discovery': document.getElementById('view-discovery')
+      };
+
+      Object.keys(views).forEach(key => {
+        const view = views[key];
+        if (key === tabId) {
+          view.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+          view.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto', 'active');
+        } else {
+          view.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+          view.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto', 'active');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize clock if footer is ever added or for internal logic
+      setInterval(() => {
+        const now = new Date();
+        // Console log for debug in mobile simulation if needed
+      }, 1000);
+
+      // Handle the Run button click
+      const runBtn = document.getElementById('btn-run-mobile');
+      if(runBtn) {
+        runBtn.addEventListener('click', () => {
+          switchTab('preview');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
