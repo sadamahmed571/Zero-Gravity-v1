@@ -1,0 +1,89 @@
+/* 📱 Mobile-First Essence for First Flow */
+
+:root {
+  --mobile-safe-top: env(safe-area-inset-top, 0px);
+  --mobile-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body {
+  padding-top: var(--mobile-safe-top);
+  padding-bottom: var(--mobile-safe-bottom);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Base View Pane Management */
+.view-pane {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  background-color: #0F111A; /* Fixed background to prevent ghosting during slide */
+}
+
+.view-pane.active {
+  z-index: 10;
+}
+
+/* Bottom Navigation Styling */
+.nav-btn {
+  position: relative;
+  transition: all 0.3s ease;
+  color: rgba(226, 226, 229, 0.4);
+}
+
+.nav-btn.active {
+  color: var(--ff-primary-color);
+}
+
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: var(--ff-primary-color);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--ff-primary-color);
+}
+
+/* Specialized Editor Mobile UI */
+#view-editor .code-row {
+  border-radius: 4px;
+  margin-bottom: 2px;
+}
+
+/* Chat Bubbles Optimization */
+#view-ai .glass-card {
+  max-width: 90%;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Micro-Interactions for Mobile */
+@keyframes touch-ripple {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+button:active {
+  animation: touch-ripple 0.2s ease-out forwards;
+}
+
+/* Quad-Logic Specific Spacing (4pt Grid) */
+.m-4-grid { margin: 16px; }
+.p-4-grid { padding: 16px; }
+.gap-4-grid { gap: 16px; }
+
+/* Discovery Cards Optimization */
+#view-discovery .glass-card {
+  background: rgba(26, 28, 46, 0.8);
+  border: 1px solid rgba(138, 180, 248, 0.1);
+}
+
+/* Performance Tweaks */
+.glass-effect, .glass-card {
+  /* Reduce blur intensity for mobile performance if needed */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
