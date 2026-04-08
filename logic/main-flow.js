@@ -1,10 +1,10 @@
 /**
- * ZGE Main Flow Controller
+ * First Flow Main Controller
  * مسؤول عن تهيئة النظام العام والربط بين المحرك والواجهة
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 ZGE Engine: Zero-Gravity Initialized');
+    console.log('🚀 First Flow Engine: Master Your Intent Initialized');
     
     // تهيئة أزرار التشغيل والمشاركة
     const btnRun = document.getElementById('btn-run');
@@ -37,7 +37,7 @@ function setupActivityBar() {
 }
 
 // تصدير دوال عالمية إذا لزم الأمر
-window.ZGE = {
+window.FF = {
     version: "1.0.0-alpha",
-    status: "Weightless"
+    status: "Flowing"
 };

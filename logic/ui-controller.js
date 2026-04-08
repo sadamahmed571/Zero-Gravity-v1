@@ -50,7 +50,7 @@ function showSnackbar() {
     <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
       <span class="material-symbols-outlined text-[18px]">check_circle</span>
     </div>
-    <p class="text-sm font-bold">جاري معالجة الطلب في انعدام الجاذبية 🚀</p>
+    <p class="text-sm font-bold">جاري معالجة الطلب في First Flow 🚀</p>
   `;
   container.appendChild(snack);
   
