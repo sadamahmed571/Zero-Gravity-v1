@@ -5,24 +5,34 @@
   --statusbar-height: 24px;
   --ff-primary-color: #8AB4F8;
 
-  /* 🎨 الألوان الرديفة المخصصة (First Flow Extensions) */
-  --ff-educational-guide: #8AB4F8CC;      /* لون القاموس والشروحات - مريح للعين */
-  --ff-secondary-icon: #4A7C80;           /* لون الأيقونات الرديفة والتلميحات */
-  --ff-info-notification-bg: #162A2E;     /* لون خلفية الإشعارات الهادئة */
+  /* ============================================
+     🎨 الالوان التكميلية - First Flow
+     (مخصصة للوكيل البرمجي - ألوان مطفأة ومريحة للعين، خالية من البنفسجي)
+     ============================================ */
+  --ff-state-info: #56B6C2;      /* سيان ناعم - للإشعارات والروابط */
+  --ff-state-success: #98C379;   /* أخضر مطفأ - للنجاح والإضافات */
+  --ff-state-warning: #E5C07B;   /* أصفر هادئ - للتحذيرات */
+  --ff-state-error: #E06C75;     /* أحمر مريح - للأخطاء والحذف */
+  --ff-state-notice: #D19A66;    /* برتقالي ناعم - للملاحظات الخاصة */
+
+  --ff-educational-guide: rgba(86, 182, 194, 0.85); /* لون القاموس والشروحات (سيان هادئ) */
+  --ff-secondary-icon: #7F848E;                     /* رمادي مزرق للأيقونات الرديفة (لا يشتت العين) */
+  --ff-info-notification-bg: #181A24;               /* خلفية الإشعارات (مائل للأزرق الداكن الصافي، بلا بنفسجي) */
+  /* ============================================ */
 }
 
-/* Radial Muted Tones */
-.ff-tone-auto { color: #8AB4F8 !important; }
-.ff-tone-auto-bg { background-color: rgba(138,180,248,0.15) !important; border-color: rgba(138,180,248,0.3) !important; }
+/* Radial Muted Tones (تم ربطها بالألوان التكميلية المطفأة مع شفافية ناعمة) */
+.ff-tone-auto { color: var(--ff-state-info) !important; }
+.ff-tone-auto-bg { background-color: rgba(86, 182, 194, 0.12) !important; border-color: rgba(86, 182, 194, 0.25) !important; }
 
-.ff-tone-chat { color: #D46B6B !important; }
-.ff-tone-chat-bg { background-color: rgba(212,107,107,0.15) !important; border-color: rgba(212,107,107,0.3) !important; }
+.ff-tone-chat { color: var(--ff-state-error) !important; }
+.ff-tone-chat-bg { background-color: rgba(224, 108, 117, 0.12) !important; border-color: rgba(224, 108, 117, 0.25) !important; }
 
-.ff-tone-plan { color: #CCA854 !important; }
-.ff-tone-plan-bg { background-color: rgba(204,168,84,0.15) !important; border-color: rgba(204,168,84,0.3) !important; }
+.ff-tone-plan { color: var(--ff-state-warning) !important; }
+.ff-tone-plan-bg { background-color: rgba(229, 192, 123, 0.12) !important; border-color: rgba(229, 192, 123, 0.25) !important; }
 
-.ff-tone-build { color: #66B278 !important; }
-.ff-tone-build-bg { background-color: rgba(102,178,120,0.15) !important; border-color: rgba(102,178,120,0.3) !important; }
+.ff-tone-build { color: var(--ff-state-success) !important; }
+.ff-tone-build-bg { background-color: rgba(152, 195, 121, 0.12) !important; border-color: rgba(152, 195, 121, 0.25) !important; }
 
 body {
   background-color: #0F111A;
@@ -50,13 +60,12 @@ body {
 .glass-effect {
   background: rgba(15, 17, 26, 0.85);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 240, 255, 0.05); /* Cyan glow hint */
+  border-bottom: 1px solid rgba(86, 182, 194, 0.1); /* Muted Cyan glow */
 }
 .glass-card {
   background: rgba(26, 28, 46, 0.5);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 240, 255, 0.08); /* Cyan border */
-  
+  border: 1px solid rgba(86, 182, 194, 0.12); /* Muted Cyan border */
 }
 .modal-overlay {
   background: rgba(15, 17, 26, 0.8);
@@ -67,7 +76,7 @@ body {
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 240, 255, 0.15);
+  background: rgba(86, 182, 194, 0.2); /* Muted Cyan thumb */
   border-radius: 4px;
 }
 
@@ -81,7 +90,7 @@ body {
 @keyframes pulse-soft { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } }
 .animate-pulse-soft { animation: pulse-soft 2s infinite ease-in-out; }
 
-@keyframes mic-glow { 0%, 100% { text-shadow: 0 0 4px rgba(138, 180, 248, 0.4); } 50% { text-shadow: 0 0 10px rgba(138, 180, 248, 0.8); } }
+@keyframes mic-glow { 0%, 100% { text-shadow: 0 0 4px rgba(86, 182, 194, 0.4); } 50% { text-shadow: 0 0 10px rgba(86, 182, 194, 0.8); } }
 .animate-mic-pulse { animation: mic-glow 3s infinite ease-in-out; }
 
 @keyframes snackbar-in { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -93,10 +102,9 @@ body {
 
 /* ============================================
     🎨 MWC Token Overrides — First Flow Dark Theme
-    ثبّت هوية الألوان على مكونات Google الحقيقية
 ============================================ */
 :root {
-  /* Primary Color Tokens */
+  /* Primary Color Tokens (بقية الألوان الأساسية كما هي) */
   --md-sys-color-primary: #8AB4F8;
   --md-sys-color-on-primary: #0F111A;
   --md-sys-color-primary-container: rgba(138,180,248,0.15);
@@ -123,10 +131,3 @@ md-outlined-button  { --md-outlined-button-label-text-color: rgba(226,226,229,0.
 md-icon-button      { --md-icon-button-icon-color: rgba(226,226,229,0.6); }
 md-icon-button:hover{ --md-icon-button-icon-color: #8AB4F8; }
 md-filled-tonal-button { --md-filled-tonal-button-container-color: rgba(138,180,248,0.15); --md-filled-tonal-button-label-text-color: #8AB4F8; font-family: 'Noto Sans Arabic', sans-serif; }
-
-
-
-
-
-
-
