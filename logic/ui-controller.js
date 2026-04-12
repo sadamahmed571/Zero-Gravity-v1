@@ -42,15 +42,15 @@ function closeModals() {
 }
 
 // Snackbar Controller
-function showSnackbar() {
+function showSnackbar(message = "جاري معالجة الطلب في Alfa Flow 🚀") {
   const container = document.getElementById('snackbar-container');
   const snack = document.createElement('div');
-  snack.className = "animate-snackbar bg-surface border border-white/10 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 pointer-events-auto min-w-[320px]";
+  snack.className = "animate-snackbar bg-surface border border-white/10 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 pointer-events-auto min-w-[320px] mb-2";
   snack.innerHTML = `
-    <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+    <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shrink-0">
       <span class="material-symbols-outlined text-[18px]">check_circle</span>
     </div>
-    <p class="text-sm font-bold">جاري معالجة الطلب في First Flow 🚀</p>
+    <p class="text-sm font-bold">${message}</p>
   `;
   container.appendChild(snack);
   
@@ -62,8 +62,9 @@ function showSnackbar() {
 
 // Auto-Scroll Controller للمقترحات
 let scrollInterval;
-function startScrollChips(step) {
-  const container = document.getElementById('chips-container');
+function startScrollChips(step, containerId = 'chips-container') {
+  const container = document.getElementById(containerId);
+  if (!container) return;
   scrollInterval = setInterval(() => {
     container.scrollBy({ left: step }); 
   }, 15);

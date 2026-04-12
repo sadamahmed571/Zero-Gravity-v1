@@ -1,10 +1,10 @@
 /**
- * First Flow Main Controller
+ * Alfa Flow Main Controller
  * مسؤول عن تهيئة النظام العام والربط بين المحرك والواجهة
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 First Flow Engine: Master Your Intent Initialized');
+    console.log('🚀 Alfa Flow Engine: Master Your Intent Initialized');
     
     // تهيئة أزرار التشغيل والمشاركة
     const btnRun = document.getElementById('btn-run');
